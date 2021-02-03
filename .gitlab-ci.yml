@@ -6,14 +6,13 @@ services:
 before_script:
   - docker info
 
-tags:
-  - common
-
 cache:
   paths:
     - node_modules
 
 build:
   stage: build
+  tags:
+    - common
   script:
     - docker build -f client/Dockerfile -t client client
