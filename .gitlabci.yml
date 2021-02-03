@@ -1,0 +1,19 @@
+image: docker:latest
+
+services:
+  - docker:latest-dind
+
+before_script:
+  - docker info
+
+tags:
+  -common
+
+cache:
+  paths:
+    - node_modules
+
+build:
+  stage: build
+  script:
+    - docker build -f client/Dockerfile -t client client
