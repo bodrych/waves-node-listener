@@ -7,7 +7,7 @@ before_script:
   - docker info
 
 tags:
-  -common
+  - common
 
 cache:
   paths:
