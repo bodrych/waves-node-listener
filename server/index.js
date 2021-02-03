@@ -2,19 +2,29 @@ import net from 'net'
 import { Server } from 'socket.io'
 import { contentId, contentIdNames, Handshake, Message, Peers } from 'waves-proto-js'
 import { inspect } from 'util'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const io = new Server(process.env.PORT, {
   cors: {
-    origin: 'http://localhost:8080',
+    origin: process.env.ORIGIN,
     methods: ['GET', 'POST'],
   },
 })
 
 io.on('connect', socket => {
   let client
-  socket.send('Hello!')
   socket.on('node-connect', data => {
+    if (!data) {
+      socket.send('Invalid host')
+      return
+    }
     const [host, port] = data.split(':')
+    if (!host || !port) {
+      socket.send('Invalid host')
+      return
+    }
     client = net.createConnection({ host, port })
 
     client.on('ready', () => {
@@ -28,7 +38,7 @@ io.on('connect', socket => {
     })
 
     client.once('data', data => {
-      socket.send(inspect(Handshake.fromBuffer(data)))
+      socket.emit('handshake', inspect(Handshake.fromBuffer(data)))
 
       let buffer = Buffer.from([])
       let targetLength = 0
@@ -58,16 +68,16 @@ io.on('connect', socket => {
     })
 
     client.on('error', error => {
-      socket.send(`Error: ${error}`)
+      socket.emit('closed', `Error: ${error}`)
     })
 
     client.on('timeout', () => {
       client.destroy(new Error('timeout'))
-      socket.send('timeout')
+      socket.emit('closed', 'timeout')
     })
 
     client.on('close', () => {
-      socket.send('closed')
+      socket.emit('closed', 'Connection closed')
     })
   })
 

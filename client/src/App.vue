@@ -1,25 +1,16 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="font-serif m-10">
+    <Listen />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { defineAsyncComponent } from 'vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Listen: defineAsyncComponent(() => import('./components/Listen.vue')),
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
