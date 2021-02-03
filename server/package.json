@@ -1,0 +1,12 @@
+{
+  "name": "listen_to_your_node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "author": "bodrych",
+  "license": "MIT",
+  "dependencies": {
+    "socket.io": "^3.1.0",
+    "waves-proto-js": "git+ssh://git@gitlab.com/bodrych/waves-proto-js.git"
+  }
+}
