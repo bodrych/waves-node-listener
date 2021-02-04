@@ -43,7 +43,14 @@ io.on('connect', socket => {
     })
 
     client.once('data', data => {
-      socket.emit('handshake', inspect(Handshake.fromBuffer(data)))
+      try {
+        const handshake = Handshake.fromBuffer(data)
+        socket.emit('handshake', inspect(handshake))
+      } catch (e) {
+        socket.send('Something went wrong')
+        client.destroy()
+        return
+      }
 
       let buffer = Buffer.from([])
       let targetLength = 0
