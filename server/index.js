@@ -6,9 +6,13 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const io = new Server(process.env.PORT, {
+const { PORT, ORIGIN } = process.env
+
+console.log({ PORT, ORIGIN })
+
+const io = new Server(PORT, {
   cors: {
-    origin: process.env.ORIGIN,
+    origin: ORIGIN,
     methods: ['GET', 'POST'],
   },
 })
@@ -87,5 +91,11 @@ io.on('connect', socket => {
 
   socket.on('node-disconnect', (reason) => {
     client && client.destroy()
+  })
+})
+
+process.on('SIGTERM', () => {
+  io.close(() => {
+    process.exit(0)
   })
 })

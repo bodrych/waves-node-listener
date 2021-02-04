@@ -9,5 +9,10 @@ build:
   stage: build
   tags:
     - common
+  variables:
+    ORIGIN: "https://node-listener.badr.dev"
   script:
     - docker build -f client/Dockerfile -t client client
+    - docker build -f server/Dockerfile -t server server
+    - docker run -d -v ${PWD}/client:/app -v /app/node_modules -p 8080:80 --rm client
+    - docker run -d -v ${PWD}/server:/app -v /app/node_modules -p 3000:3000 --rm server
