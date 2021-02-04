@@ -38,7 +38,7 @@ export default {
   name: 'Listen',
   setup() {
     const welcome = () => {
-      console.info('%cWelcome to the Waves Node Binary Protocol Listener', 'color:yellow')
+      console.info('%cWelcome to the Waves Node Binary Protocol Listener!', 'color:yellow')
       console.info(`%cUsage:%c
 connect('host:port') - connect to the specified node
 disconnect() - close connection

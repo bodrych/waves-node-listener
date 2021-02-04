@@ -1,19 +1,13 @@
-before_script:
-  - docker info
-
 cache:
   paths:
-    - node_modules
+    - client/node_modules
+    - server/node_modules
 
-build:
-  stage: build
+deploy:
+  stage: deploy
   tags:
     - common
-  variables:
-    ORIGIN: "https://listener.badr.dev"
-    VUE_APP_SERVER: "wss://listener.badr.dev/ws"
   script:
-    - docker build -f client/Dockerfile -t client client
-    - docker build -f server/Dockerfile -t server server
-    - docker run -v ${PWD}/client:/app -v /app/node_modules -p 8080:80 --rm client
-    - docker run -v ${PWD}/server:/app -v /app/node_modules -p 3000:3000 --rm server
+    - docker-compose -f docker-compose.yml -f production.yml build
+    - docker-compose -f docker-compose.yml -f production.yml down
+    - docker-compose -f docker-compose.yml -f production.yml up -d --force-recreate

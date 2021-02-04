@@ -1,0 +1,7 @@
+services:
+  client:
+    environment:
+      - VUE_APP_SERVER=wss://listener.badr.dev/ws
+  server:
+    environment:
+      - ORIGIN=https://listener.badr.dev
