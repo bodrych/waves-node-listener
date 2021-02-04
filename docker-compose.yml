@@ -1,13 +1,14 @@
 services:
   client:
-    build: ./client
+    build:
+      context: ./client
+      args:
+        - VUE_APP_SERVER=ws://localhost:3000
     volumes:
       - ./client:/app
       - /app/node_modules
     ports:
       - 8080:80
-    environment:
-      - VUE_APP_SERVER=ws://localhost:3000
   server:
     build: ./server
     volumes:
