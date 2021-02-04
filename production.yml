@@ -2,7 +2,7 @@ services:
   client:
     build:
       args:
-        - VUE_APP_SERVER=wss://listener.badr.dev/ws/
+        - VUE_APP_SERVER=wss://listener.badr.dev
   server:
     environment:
       - ORIGIN=https://listener.badr.dev
