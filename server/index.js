@@ -6,11 +6,12 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const { PORT, ORIGIN } = process.env
+const { ORIGIN } = process.env
+const port = 3000
 
-console.log({ PORT, ORIGIN })
+console.log({ ORIGIN })
 
-const io = new Server(PORT, {
+const io = new Server(port, {
   cors: {
     origin: ORIGIN,
     methods: ['GET', 'POST'],
