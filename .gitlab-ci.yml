@@ -10,7 +10,8 @@ build:
   tags:
     - common
   variables:
-    ORIGIN: "https://node-listener.badr.dev"
+    ORIGIN: "https://listener.badr.dev"
+    VUE_APP_SERVER: "wss://listener.badr.dev/ws"
   script:
     - docker build -f client/Dockerfile -t client client
     - docker build -f server/Dockerfile -t server server
