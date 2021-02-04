@@ -4,6 +4,7 @@ services:
       context: ./client
       args:
         - VUE_APP_SERVER=ws://localhost:3000
+    restart: always
     volumes:
       - ./client:/app
       - /app/node_modules
@@ -11,6 +12,7 @@ services:
       - 8080:80
   server:
     build: ./server
+    restart: always
     volumes:
       - ./server:/app
       - /app/node_modules
